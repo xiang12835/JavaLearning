@@ -16,7 +16,7 @@ public class MultiTable {
         for (int i = 1; i < 10; i++) {
             String line = "";
             for (int j = 1; j <= i; j++) {
-                line = line + j + "*" + i + "=" + (j * i) + "\t"; // 使用String变量，做String的加法
+                line = line + j + "*" + i + "=" + (j * i) + "\t";
             }
             System.out.println(line);
         }
