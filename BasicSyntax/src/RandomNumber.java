@@ -19,7 +19,7 @@ public class RandomNumber {
             // num的值会在0到mod-1，也就是0到rangeEnd - rangeStart -1
             int num = ((int) (randNum * rangeEnd * 100)) % mod;
 
-            // num加rangeStart之后，值域是0到rangeEnd - 1
+            // num加rangeStart之后，值域是rangeStart到rangeEnd - 1
             num += rangeStart;
 
             if (num <= rangeStart) {
