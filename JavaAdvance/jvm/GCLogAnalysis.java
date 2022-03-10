@@ -3,25 +3,25 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.LongAdder;
 /*
-ÑİÊ¾GCÈÕÖ¾Éú³ÉÓë½â¶Á
+æ¼”ç¤ºGCæ—¥å¿—ç”Ÿæˆä¸è§£è¯»
 */
 public class GCLogAnalysis {
     private static Random random = new Random();
     public static void main(String[] args) {
-        // µ±Ç°ºÁÃëÊ±¼ä´Á
+        // å½“å‰æ¯«ç§’æ—¶é—´æˆ³
         long startMillis = System.currentTimeMillis();
-        // ³ÖĞøÔËĞĞºÁÃëÊı; ¿É¸ù¾İĞèÒª½øĞĞĞŞ¸Ä
+        // æŒç»­è¿è¡Œæ¯«ç§’æ•°; å¯æ ¹æ®éœ€è¦è¿›è¡Œä¿®æ”¹
         long timeoutMillis = TimeUnit.SECONDS.toMillis(1);
-        // ½áÊøÊ±¼ä´Á
+        // ç»“æŸæ—¶é—´æˆ³
         long endMillis = startMillis + timeoutMillis;
         LongAdder counter = new LongAdder();
-        System.out.println("ÕıÔÚÖ´ĞĞ...");
-        // »º´æÒ»²¿·Ö¶ÔÏó; ½øÈëÀÏÄê´ú
+        System.out.println("æ­£åœ¨æ‰§è¡Œ...");
+        // ç¼“å­˜ä¸€éƒ¨åˆ†å¯¹è±¡; è¿›å…¥è€å¹´ä»£
         int cacheSize = 2000;
         Object[] cachedGarbage = new Object[cacheSize];
-        // ÔÚ´ËÊ±¼ä·¶Î§ÄÚ,³ÖĞøÑ­»·
+        // åœ¨æ­¤æ—¶é—´èŒƒå›´å†…,æŒç»­å¾ªç¯
         while (System.currentTimeMillis() < endMillis) {
-            // Éú³ÉÀ¬»ø¶ÔÏó
+            // ç”Ÿæˆåƒåœ¾å¯¹è±¡
             Object garbage = generateGarbage(100*1024);
             counter.increment();
             int randomIndex = random.nextInt(2 * cacheSize);
@@ -29,10 +29,10 @@ public class GCLogAnalysis {
                 cachedGarbage[randomIndex] = garbage;
             }
         }
-        System.out.println("Ö´ĞĞ½áÊø!¹²Éú³É¶ÔÏó´ÎÊı:" + counter.longValue());
+        System.out.println("æ‰§è¡Œç»“æŸ!å…±ç”Ÿæˆå¯¹è±¡æ¬¡æ•°:" + counter.longValue());
     }
 
-    // Éú³É¶ÔÏó
+    // ç”Ÿæˆå¯¹è±¡
     private static Object generateGarbage(int max) {
         int randomSize = random.nextInt(max);
         int type = randomSize % 4;
