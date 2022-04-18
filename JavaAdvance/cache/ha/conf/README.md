@@ -1,12 +1,14 @@
 ### Redis 主从复制
 
-- redis6379.conf
-- redis6380.conf
-- redis6381.conf
+演示：搭建一主两从
 
-1. 修改端口号port，
-2. 修改文件夹dir，
-3. 修改pidifile
+1. 修改redis.conf 配置文件
+
+redis6379.conf（主）, redis6380.conf（从）, redis6381.conf（从）
+
+修改端口号port，文件夹dir，pidifile
+
+2. 启动，使用`slaveof`配置主从
 
 ```
 $ redis-server redis6379.conf & # 主库
@@ -21,9 +23,8 @@ slaveof 127.0.0.1 6379
 ```
 
 
-### Redis Sentinel 自动主从切换
+### Redis Sentinel 自动主从切换 ～ 类似于MySQL的MHA
 
->Redis Sentinel 主从切换：走向高可用 ～ 类似于MHA
 
 ![](http://110.40.156.239:3000/images/bd42ea1997064efab1931e9c645c3051.png)
 
@@ -31,7 +32,7 @@ Sentinel 在集群里，相当于注册中心。
 
 可以做到监控主从节点的在线状态，并做切换（基于raft协议）。
 
-演示：
+演示：搭建一主两从两哨兵
 
 - 配置两个 sentinel0.conf, sentinel1.conf
 - 启动两个 sentinel 的节点（26379和26380），专门去监控redis-server（6379）的状态和自动主从切换
@@ -53,12 +54,15 @@ sentinel parallel-syncs mymaster 1
 2. 两种启动方式：
 
 ```
-$ redis-sentinel sentinel.conf 
+$ redis-sentinel sentinel0.conf 
 
  或者
 
 $ redis-server redis.conf --sentinel 
 ```
+
+复制 sentinel0.conf，修改端口和ID号，命名为sentinel1.conf
+
 
 3. 关闭主库
 
@@ -70,7 +74,7 @@ exit
 
 4. 自动切换，使用 info 查看主从信息
 
-同时，可以使用客户端直接连接 Sentinel
+另外，可以使用客户端直接连接 Sentinel
 
 ```
 redis-cli -h 127.0.0.1 -p 26380
